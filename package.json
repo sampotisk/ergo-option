@@ -1,6 +1,6 @@
 {
   "name": "com.sam-potisk.ergo-option",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "Ergo Option",
   "description": "A simple Option type for Unity that doesn't bloat your code and can be serialized in the inspector.",
   "unity": "2021.3",
