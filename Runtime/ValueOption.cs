@@ -16,10 +16,6 @@ namespace ErgoOption
             set => this.value = value;
         }
 
-        public bool IsSome => hasValue;
-
-        public bool IsNone => !hasValue;
-
         public T? AsNullable
         {
             get => hasValue ? value : null;
@@ -46,7 +42,7 @@ namespace ErgoOption
 
         public static implicit operator ValueOption<T>(T value) => new(value);
         
-        public static implicit operator bool(ValueOption<T> option) => option.IsSome;
+        public static implicit operator bool(ValueOption<T> option) => option.hasValue;
 
         public static implicit operator T?(ValueOption<T> option) => option.AsNullable;
 
@@ -54,30 +50,17 @@ namespace ErgoOption
 
         public static ValueOption<T> None => new ValueOption<T>();
 
-        public override int GetHashCode() => IsSome ? Value.GetHashCode() : 0;
-
-        public void IfSome(Action<T> action)
+        // ReSharper disable once ParameterHidesMember
+        public bool Try(out T value)
         {
-            if (IsSome) action.Invoke(value);
+            if (hasValue)
+            {
+                value = this.value;
+                return true;
+            }
+
+            value = default;
+            return false;
         }
-
-        public void IfNone(Action action)
-        {
-            if (IsNone) action.Invoke();
-        }
-
-        public void Match(Action<T> some, Action none)
-        {
-            if (IsSome) some.Invoke(value);
-            else none.Invoke();
-        }
-
-        public TR Match<TR>(Func<T, TR> some, Func<TR> none) => IsSome ? some.Invoke(value) : none.Invoke();
-
-        public TR Match<TR>(TR some, TR none) => IsSome ? some : none;
-
-        public T Reduce(T defaultIfNone) => IsSome ? value : defaultIfNone;
-
-        public T Reduce(Func<T> defaultIfNone) => IsSome ? value : defaultIfNone.Invoke();
     }
 }
