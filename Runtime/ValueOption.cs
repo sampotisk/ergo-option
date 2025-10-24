@@ -52,7 +52,7 @@ namespace ErgoOption
 
         public static bool Some(T value) => new ValueOption<T>(value);
 
-        public static bool None() => new ValueOption<T>();
+        public static ValueOption<T> None => new ValueOption<T>();
 
         public override int GetHashCode() => IsSome ? Value.GetHashCode() : 0;
 
