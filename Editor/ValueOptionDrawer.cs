@@ -1,8 +1,8 @@
-namespace ErgoOption
-{
-    using UnityEditor;
-    using UnityEngine;
+using UnityEditor;
+using UnityEngine;
 
+namespace ErgoOption.Editor
+{
     [CustomPropertyDrawer(typeof(ValueOption<>))]
     public sealed class ValueOptionDrawer : PropertyDrawer
     {
