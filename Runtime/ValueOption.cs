@@ -56,9 +56,9 @@ namespace ErgoOption
 
         public override int GetHashCode() => IsSome ? Value.GetHashCode() : 0;
 
-        public void IfSome(Action action)
+        public void IfSome(Action<T> action)
         {
-            if (IsSome) action.Invoke();
+            if (IsSome) action.Invoke(value);
         }
 
         public void IfNone(Action action)
@@ -66,13 +66,13 @@ namespace ErgoOption
             if (IsNone) action.Invoke();
         }
 
-        public void Match(Action some, Action none)
+        public void Match(Action<T> some, Action none)
         {
-            if (IsSome) some.Invoke();
+            if (IsSome) some.Invoke(value);
             else none.Invoke();
         }
 
-        public TR Match<TR>(Func<TR> some, Func<TR> none) => IsSome ? some.Invoke() : none.Invoke();
+        public TR Match<TR>(Func<T, TR> some, Func<TR> none) => IsSome ? some.Invoke(value) : none.Invoke();
 
         public TR Match<TR>(TR some, TR none) => IsSome ? some : none;
 
