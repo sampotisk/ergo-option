@@ -1,9 +1,9 @@
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
-#
-# We don't need .meta files for this project
-*.meta
+
+# Mac OS
+.DS_Store
 
 .utmp/
 /[Ll]ibrary/
