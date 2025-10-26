@@ -12,7 +12,9 @@ namespace ErgoOption
 
         public T Value
         {
-            get => value;
+            get => hasValue
+                ? value
+                : throw new NullReferenceException("Trying to access value of a ValueOption, but the value is null!");
             set => this.value = value;
         }
 
@@ -41,7 +43,7 @@ namespace ErgoOption
         }
 
         public static implicit operator ValueOption<T>(T value) => new(value);
-        
+
         public static implicit operator bool(ValueOption<T> option) => option.hasValue;
 
         public static implicit operator T?(ValueOption<T> option) => option.AsNullable;

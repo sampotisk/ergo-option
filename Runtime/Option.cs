@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace ErgoOption
@@ -38,17 +39,18 @@ namespace ErgoOption
         }
 
         public static implicit operator Option<T>(T value) => new(value);
-        
+
         public static implicit operator bool(Option<T> option) => !IsNull(option.value);
 
         public static implicit operator T?(Option<T> option) => option.AsNullable;
-
+        
         public static bool Some(T value) => new Option<T>(value);
 
         public static Option<T> None => new Option<T>();
 
         // ReSharper disable once ParameterHidesMember
-        public bool Try(out T? value)
+        [ContractAnnotation("=> true, value:notnull; => false, value:null")]
+        public bool Try(out T value)
         {
             if (!IsNull(this.value))
             {
@@ -56,13 +58,13 @@ namespace ErgoOption
                 return true;
             }
 
-            value = null;
+            value = null!;
             return false;
         }
 
         private static bool IsNull(T? nullable)
         {
-            if (nullable is not Component unityObject) return nullable == null;
+            if (nullable is not Component unityObject) return nullable is null;
 
             return !unityObject;
         }
