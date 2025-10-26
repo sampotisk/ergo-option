@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ErgoOption
 {
     [Serializable]
-    public struct Option<T> where T : class
+    public struct Option<T> where T : class?
     {
         [SerializeField] private T value;
 
