@@ -1,12 +1,11 @@
 #nullable enable
 using System;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace ErgoOption
 {
     [Serializable]
-    public struct Option<T> where T : class?
+    public struct Option<T> where T : class
     {
         [SerializeField] private T value;
 
@@ -49,7 +48,6 @@ namespace ErgoOption
         public static Option<T> None => new Option<T>();
 
         // ReSharper disable once ParameterHidesMember
-        [ContractAnnotation("=> true, value:notnull; => false, value:null")]
         public bool Try(out T value)
         {
             if (!IsNull(this.value))
