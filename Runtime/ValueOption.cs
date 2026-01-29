@@ -5,16 +5,23 @@ using UnityEngine;
 namespace ErgoOption
 {
     [Serializable]
-    public struct ValueOption<T> where T : struct
+    public struct ValueOption<T>
+        where T : struct
     {
-        [SerializeField] private T value;
-        [SerializeField] private bool hasValue;
+        [SerializeField]
+        private T value;
+
+        [SerializeField]
+        private bool hasValue;
 
         public T Value
         {
-            get => hasValue
-                ? value
-                : throw new NullReferenceException("Trying to access value of a ValueOption, but the value is null!");
+            get =>
+                hasValue
+                    ? value
+                    : throw new NullReferenceException(
+                        "Trying to access value of a ValueOption, but the value is null!"
+                    );
             set => this.value = value;
         }
 
@@ -46,8 +53,6 @@ namespace ErgoOption
 
         public static implicit operator bool(ValueOption<T> option) => option.hasValue;
 
-        public static implicit operator T?(ValueOption<T> option) => option.AsNullable;
-
         public static bool Some(T value) => new ValueOption<T>(value);
 
         public static ValueOption<T> None => new ValueOption<T>();
@@ -66,3 +71,4 @@ namespace ErgoOption
         }
     }
 }
+

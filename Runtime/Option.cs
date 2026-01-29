@@ -6,9 +6,11 @@ using UnityEngine;
 namespace ErgoOption
 {
     [Serializable]
-    public struct Option<T> where T : class?
+    public struct Option<T>
+        where T : class?
     {
-        [SerializeField] private T value;
+        [SerializeField]
+        private T value;
 
         public T Value
         {
@@ -20,7 +22,8 @@ namespace ErgoOption
         {
             get
             {
-                if (value is not Component unityObject) return value;
+                if (value is not Component unityObject)
+                    return value;
 
                 return unityObject ? value : null;
             }
@@ -42,8 +45,6 @@ namespace ErgoOption
 
         public static implicit operator bool(Option<T> option) => !IsNull(option.value);
 
-        public static implicit operator T?(Option<T> option) => option.AsNullable;
-        
         public static bool Some(T value) => new Option<T>(value);
 
         public static Option<T> None => new Option<T>();
@@ -64,7 +65,8 @@ namespace ErgoOption
 
         private static bool IsNull(T? nullable)
         {
-            if (nullable is not Component unityObject) return nullable is null;
+            if (nullable is not Component unityObject)
+                return nullable is null;
 
             return !unityObject;
         }
